@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Isklucheniya
 {
+    
     public class Holidays
     {
         public int days;
@@ -19,11 +20,11 @@ namespace Isklucheniya
         {
             days = day;
 
-            if ((days % 7 == 0) || ((days + 1) % 7 == 0))
+            if ((days % 7 == 0) || ((days + 1) % 7 == 0)||(days<3))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Ура выходной!!!");
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
 
             }
             else if (days > 31) { throw new ArgumentException(); }
@@ -32,7 +33,7 @@ namespace Isklucheniya
         }
 
 
-
+    }
 
         public class JobsDays : Holidays
         {
@@ -52,36 +53,71 @@ namespace Isklucheniya
                 catch (Exception) when(days<32)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Иди работай!");
+                    Console.WriteLine("Иди работай! Выходные не за горами");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
                 catch (ArgumentException)
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("В январе 31 день! Чем думаешь?");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
 
+        }
 
+    public class MonthNow
+    {
+        int month;
+        public MonthNow(int month)
+        {
+            this.month = month;
+        }
+        public void NowMonth(int months)
+        {
+            month = months;
+            if (month == DateTime.Now.Month)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Угадал, молодец!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else throw new Exception();
 
         }
+    }
+
+    public class Months:MonthNow
+    {
+        int mont;
+        public Months(int mont) : base(mont)
+        {
+
+        }
+        public void Month()
+        {
+            try
+            {
+                int temp;
+                temp = Int32.Parse(Console.ReadLine());
+                NowMonth(temp);
+            }
+            catch (Exception) 
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Сейчас "+DateTime.Now.Month+" месяц!!! Иди проспись!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+           
+        }
+    }
         class Program
         {
 
 
             static void Main(string[] args)
             {
-                /*
-
-
-
-
-
-    4.	Реализовать несколько методов или классов с методами 
-    и вызвать один метод из другого. 
-    В вызываемом методе сгенерировать исключение и «поднять» его в вызывающий метод.
-    */
+                
 
                 //1.Перехватить исключение запроса к несуществующему веб ресурсу
                 //и вывести сообщение о том, что произошла ошибка.
@@ -111,15 +147,15 @@ namespace Isklucheniya
                     Console.WriteLine("Нет такого сайта");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
-                #endregion
+            #endregion
+            Console.WriteLine();
 
-
-                //2.Написать программу, которая обращается к элементам массива по индексу
-                //и выходит за его пределы. 
-                //После обработки исключения вывести в финальном блоке сообщение
-                //о завершении обработки массива.
-                #region
-                int[] array = new int[10];
+            //2.Написать программу, которая обращается к элементам массива по индексу
+            //и выходит за его пределы. 
+            //После обработки исключения вывести в финальном блоке сообщение
+            //о завершении обработки массива.
+            #region
+            int[] array = new int[10];
                 Random rd = new Random();
                 try
                 {
@@ -139,22 +175,42 @@ namespace Isklucheniya
                     Console.ForegroundColor = ConsoleColor.White;
                 }
 
-                #endregion
+            #endregion
+            Console.WriteLine();
 
-                //3.Реализовать несколько методов или классов с методами
-                //и вызвать один метод из другого. 
-                //В вызываемом методе сгенерировать исключение и «поднять» его в вызывающий метод.
-                #region
-              
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Вот и январь! Введите сегодняшнее число ");
-                Console.ForegroundColor = ConsoleColor.White;
-               
-                JobsDays journe = new JobsDays(1);
-                journe.ShowDays();
+            //3.Реализовать несколько методов или классов с методами
+            //и вызвать один метод из другого. 
+            //В вызываемом методе сгенерировать исключение и «поднять» его в вызывающий метод.
+            #region
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Праздники прошли, пора просыпаться...\n Давай определяться, какой сейчас месяц?\n Просто набери порядковый номер месяца -");
 
-                #endregion
-            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Months monthes = new Months(1);
+            monthes.Month();
+
+            Console.WriteLine();
+
+            #endregion
+
+
+
+            /*
+4.	Реализовать несколько методов или классов с методами 
+и вызвать один метод из другого. 
+В вызываемом методе сгенерировать исключение и «поднять» его в вызывающий метод.
+*/
+            #region
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("В общем вот и январь! Введите сегодняшнее число ");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            JobsDays journe = new JobsDays(1);
+            journe.ShowDays();
+
+            #endregion
         }
     }
-}
+    }
+
